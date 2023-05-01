@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.use(router);
-let timeNow = new Date().toLocaleTimeString();
+let timeNow = new Date();
 router.post("/add", async (req, res) => {
   const { name, description, completed } = req.body;
 
@@ -18,7 +18,7 @@ router.post("/add", async (req, res) => {
     });
     await newTodo.save();
     res.status(200).json({
-      message: `Todo -${name}- created with success at ${timeNow} `,
+      message: `Todo -${name}- created with success  ${timeNow} `,
     });
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -44,6 +44,7 @@ router.put("/update", async (req, res) => {
           description +
           " completed:" +
           completed,
+        timeNow,
       });
     } else {
       res.status(400).json({ message: "todo not found" });
@@ -59,7 +60,7 @@ router.put("/delete", async (req, res) => {
     const deletedTodo = await Todo.findByIdAndRemove(_id);
     if (deletedTodo) {
       res.status(200).json({
-        message: `todo with the id ${deletedTodo._id} and the name ${deletedTodo.name} deleted with success`,
+        message: `todo with the id ${deletedTodo._id} and the name ${deletedTodo.name} deleted with success  ${timeNow}`,
       });
     } else {
       res.status(400).json({ message: "todo not found" });
