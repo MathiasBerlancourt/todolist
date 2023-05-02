@@ -7,6 +7,16 @@ app.use(express.json());
 
 app.use(router);
 let timeNow = new Date();
+
+router.get("/todos", async (req, res) => {
+  try {
+    const todos = await Todo.find();
+    res.status(200).json(todos);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 router.post("/add", async (req, res) => {
   const { name, description, completed } = req.body;
 
