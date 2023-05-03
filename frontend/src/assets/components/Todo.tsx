@@ -1,8 +1,3 @@
-import React from "react";
-import { useReducer } from "react";
-
-const Todo = () => {
+export const Todo = () => {
   return <div>Todo</div>;
 };
-
-export default Todo;

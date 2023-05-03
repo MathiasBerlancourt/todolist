@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Todos = () => {
-  const [todos, setTodos] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+interface Todo {
+  _id: string;
+  name: string;
+  description: string;
+}
+
+const Todos = (): JSX.Element => {
+  const [todos, setTodos] = useState<Todo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchTodos = async () => {
+    const fetchTodos = async (): Promise<void> => {
       try {
-        const responseTodos = await axios.get("http://localhost:3000/todos");
+        const responseTodos = await axios.get<Todo[]>(
+          "http://localhost:3000/todos"
+        );
         console.log(responseTodos.data);
         setTodos(responseTodos.data);
 
