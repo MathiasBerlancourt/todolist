@@ -1,4 +1,4 @@
-export const Todo = ({ _id, name, description }) => {
+export const Todo = ({ _id, name, description, completed }) => {
   const todoTimeStamp = new Date().toLocaleDateString();
   return (
     <div>
@@ -6,6 +6,7 @@ export const Todo = ({ _id, name, description }) => {
 
       <p>{description}</p>
       <p>{todoTimeStamp}</p>
+      <p>{completed ? "Completed" : "Not Completed"}</p>
     </div>
   );
 };

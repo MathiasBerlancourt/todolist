@@ -24,7 +24,7 @@ router.post("/add", async (req, res) => {
     const newTodo = new Todo({
       name: name,
       description: description,
-      completed: completed,
+      completed: false,
     });
     await newTodo.save();
     res.status(200).json({
@@ -75,6 +75,33 @@ router.put("/delete", async (req, res) => {
     } else {
       res.status(400).json({ message: "todo not found" });
     }
+  } catch (error) {
+    res.status(400).json({ message: "error" });
+  }
+});
+
+router.put("/complete", async (req, res) => {
+  const { _id, completed } = req.body;
+  try {
+    const completeTodo = await Todo.findById(_id);
+    if (completeTodo) {
+      completeTodo.completed = !completed;
+      await completeTodo.save();
+      res.status(200).json({
+        message: `todo with the id ${completeTodo._id} and the name ${completeTodo.name} set his status completed to ${completeTodo.completed}  ${timeNow}`,
+      });
+    }
+  } catch (error) {
+    res.status(400).json({ message: "error" });
+  }
+});
+
+router.put("/removeAll", async (req, res) => {
+  try {
+    const deletedAll = await Todo.deleteMany();
+    res.status(200).json({
+      message: `all todos deleted with success  ${timeNow}`,
+    });
   } catch (error) {
     res.status(400).json({ message: "error" });
   }

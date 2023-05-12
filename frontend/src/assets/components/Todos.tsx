@@ -6,6 +6,7 @@ interface Todo {
   _id: string;
   name: string;
   description: string;
+  completed: boolean;
 }
 
 const Todos = (): JSX.Element => {
@@ -64,6 +65,24 @@ const Todos = (): JSX.Element => {
     }
   };
 
+  const handleCompleteTodo = async (_id: string): Promise<void> => {
+    try {
+      const responseTodo = await axios.put<Todo>(
+        `http://localhost:3000/complete/`,
+
+        { _id: _id }
+      );
+      console.log(responseTodo.data);
+      const responseGetTodos = await axios.get<Todo[]>(
+        "http://localhost:3000/todos"
+      );
+
+      setTodos(responseGetTodos.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   } else {
@@ -95,8 +114,10 @@ const Todos = (): JSX.Element => {
                   _id={todo._id}
                   name={todo.name}
                   description={todo.description}
+                  completed={todo.completed}
                 />
                 <div onClick={() => handleRemoveTodo(todo._id)}>X</div>
+                <div onClick={() => handleCompleteTodo(todo._id)}>Complete</div>
               </div>
             );
           })}
