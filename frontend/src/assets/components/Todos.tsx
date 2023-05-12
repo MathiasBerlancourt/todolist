@@ -46,6 +46,24 @@ const Todos = (): JSX.Element => {
     }
   };
 
+  const handleRemoveTodo = async (_id: string): Promise<void> => {
+    try {
+      const responseTodo = await axios.put<Todo>(
+        `http://localhost:3000/delete/`,
+
+        { _id: _id }
+      );
+      console.log(responseTodo.data);
+      const responseGetTodos = await axios.get<Todo[]>(
+        "http://localhost:3000/todos"
+      );
+
+      setTodos(responseGetTodos.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   } else {
@@ -68,17 +86,21 @@ const Todos = (): JSX.Element => {
           />
           <button onClick={handleAddTodo}>Add</button>
         </div>
-
-        {todos.map((todo) => {
-          return (
-            <Todo
-              key={todo._id}
-              _id={todo._id}
-              name={todo.name}
-              description={todo.description}
-            />
-          );
-        })}
+        <div className="flex flex-col-reverse">
+          {todos.map((todo) => {
+            return (
+              <div>
+                <Todo
+                  key={todo._id}
+                  _id={todo._id}
+                  name={todo.name}
+                  description={todo.description}
+                />
+                <div onClick={() => handleRemoveTodo(todo._id)}>X</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

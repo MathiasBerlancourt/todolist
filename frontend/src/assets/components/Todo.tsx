@@ -1,11 +1,11 @@
 export const Todo = ({ _id, name, description }) => {
+  const todoTimeStamp = new Date().toLocaleDateString();
   return (
-    <div className="flex flex-col-reverse">
-      <div>
-        <h2 className="text-red-500">{name}</h2>
+    <div>
+      <h2 className="text-red-500">{name}</h2>
 
-        <p>{description}</p>
-      </div>
+      <p>{description}</p>
+      <p>{todoTimeStamp}</p>
     </div>
   );
 };
