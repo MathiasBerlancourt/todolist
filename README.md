@@ -14,7 +14,7 @@ In this project I use :
 - MongoDB
 - Express Js
 
-**This app congains the following features:**
+**This app contains the following features:**
 
 - Add a todo
 - Delete a todo
