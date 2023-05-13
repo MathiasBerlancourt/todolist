@@ -2,11 +2,12 @@
 
 ## 📝 Description
 
-This personal project aims to work on React with tailwind, Node.js, MongoDB.
+This personal project aims to work on React with tailwind, TypeScript, Node.js, MongoDB.
 
 In this project I use :
 
 - React
+- TypeScript
 - Tailwind
 - useReducer
 - useContext
